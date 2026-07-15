@@ -23,10 +23,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg-dev \
     libonig-dev \
     libzip-dev \
-    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install gd mysqli pdo pdo_mysql mbstring zip opcache \
     && docker-php-ext-install gd mysqli pdo pdo_mysql mbstring zip \
     && rm -rf /var/lib/apt/lists/*
-
+# Install the development OPcache configuration.
+COPY opcache.ini /usr/local/etc/php/conf.d/zz-opcache.ini
 # Enable mod_rewrite for clean URLs
 RUN a2enmod rewrite
 
